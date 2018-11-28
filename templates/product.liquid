@@ -182,6 +182,28 @@
             </div>
         </div>
         {% endif %}
+
+        {% if product.customer_reviews.size > 0 %}
+        <h4>Customer reviews</h4>
+        {% for review in product.customer_reviews limit:5 %}
+        <p>
+            {{ review.content }}
+            <br>
+            <time pubdate datetime="{{ review.created_date | date: '%Y-%m-%D' }}">
+                <em class="text-light">
+                    {{ review.created_date | date: format: 'month_day_year' }}
+                </em>
+            </time>
+            <p>by {{ review.author_nickname }} </p> 
+            {% if review.rating > 0 %}
+            <p> Rated: {{ review.rating }} </p>
+            {% endif %}
+        </p>
+        {% endfor %}
+        {% endif %}
+
+        <ng-include ng-if="productRating" src="'storefront.product-rating.tpl'"></ng-include>
+
     </div>
 </div>
 
@@ -217,6 +239,12 @@
             </div>
         </div>
     </div>
+</script>
+
+<!--Template for product reating-->
+<script id="storefront.product-rating.tpl" type="text/ng-template">
+        <h4>Overall rating</h4>
+        <h2 ng-bind="productRating"></h2>
 </script>
 
     {% if settings.related_products_enable %}

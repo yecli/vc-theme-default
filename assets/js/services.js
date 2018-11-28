@@ -253,3 +253,11 @@ storefrontApp.service('orderService', ['$http', function ($http) {
         }
     }
 }]);
+
+storefrontApp.service('customerReviewService', ['$http', function ($http) {
+    return {
+        getProductRating: function (productId) {
+            return $http.get('storefrontapi/products/rating/' + productId);
+        }
+    }
+}]);
